@@ -39,6 +39,7 @@ nicePath <- function (filename) {
   })
 }
 
+
 # BS> Ok - but biocLite really only needs to be sourced once per session ...
 # JM> Yeah, but `if (!require(x)) source("biocLite.R"); biocLite(x)`
 # JM> would also source biocLite more than once if more than one bioconductor
@@ -78,7 +79,7 @@ if (!require(jsonlite, quietly=TRUE)) install.packages("jsonlite")
 
 # === Modules ===
 # used for convertIDs in getMogrifyCNhsIDs
-source("fantom_ont_conv/fantom_ont_conv.R")
+source(here::here("phylify/fantom_ont_conv/fantom_ont_conv.R"))
 
 # === Constants ===
 CHARACTER <- "character"
@@ -285,11 +286,11 @@ getSamples <- function (file) {
 }
 
 getHumanSamples <- function() {
-  return(getSamples(nicePath("./samples/HumanSamples2.0.sdrf.csv")))
+  return(getSamples(here::here("phylify/samples/HumanSamples2.0.sdrf.csv")))
 }
 
 getMouseSamples <- function() {
-  return(getSamples(nicePath("./samples/MouseSamples2.0.sdrf.csv")))
+  return(getSamples(here::here("philfy/samples/MouseSamples2.0.sdrf.csv")))
 }
 
 getFFByCategory <- function (humanSamples, category) {
@@ -299,14 +300,16 @@ getFFByCategory <- function (humanSamples, category) {
 }
 
 # === Mogrify Data Utils ===
+# TODO:
+# Fix this or something
 getMogrifyIDs <- function() {
-  return(fromJSON(nicePath("./getMogrifyCells/mogrify-cellIDs.json"))$ID)
+  return(fromJSON(here::here("phylify/getMogrifyCells/mogrify-cellIDs.json"))$ID)
 }
 
 # this depends on an internet connection, and node. and being "here"
 # It was used to verify our replicates vs. Mogrify's replicates for an FF cell ID
 getMogrifyCNhsIDs <- function(source, target) {
-  cmd <- paste("node getMogrifyCNhs/get.js", source, target)
+    cmd <- paste("node getMogrifyCNhs/get.js", source, target)
   df <- fromJSON(system(cmd, intern=TRUE))
   df$val <- lapply(df$val, convertIDs)
 

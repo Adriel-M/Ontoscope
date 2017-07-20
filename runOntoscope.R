@@ -13,11 +13,12 @@
 # ==========================================================
 
 
-
-setwd("~/Documents/07.TEACHING/50.8-BCB420-JTB2020 2016/BCB420/Ontoscope")
+library(here)
+here::here()
 
 # ==== INITS =============================
-source("../Ontoscope/phylify/ontology-explorer.r")
+# FINE
+source(here::here("phylify/ontology-explorer.r"))
 
 
 
@@ -27,7 +28,8 @@ source("../Ontoscope/phylify/ontology-explorer.r")
 
 
 # load the ontology
-load("../Ontoscope/phylify/COdat.RData")
+load(here::here("phylify/COdat.RData"))
+#load("./phylify/COdat.RData")
 
 mogList <- getMogrifyIDs()
 
@@ -42,8 +44,10 @@ x3 <- neighborhood(COdat, order=3, nodes= targetParent, mode="out")
 parent <- "FF:0101581"
 bck <- neighborhood(COdat, order=2, nodes=parent, mode="in")
 
+# added
+source(here::here("phylify/createCOdat.R"))
 # source Fantom functions
-source("./fantom_import/fantom_main.R")
+source(here::here("fantom_import/fantom_main.R"))
 fantom
 
 x <- fantomSearch("cardiac")
@@ -58,14 +62,14 @@ fantomSummarize(5)  #parameter is min. expression count threshold
 
 # load up CONTRAST
 
-source("./contrast/contrast.R")
+source(here::here("contrast/contrast.R"))
 
 # NOTE: change format!
 counts <- fantomCounts[ , -1]
 rownames(counts) <- fantomCounts$short_description
 colnames(counts) <- c("fib", "card1", "card2")
 
-diffExp <- contrast_v2(counts)
+diffExp <- contrast(counts)
 
 
 # Build a network
@@ -75,6 +79,7 @@ diffExp <- contrast_v2(counts)
 # load(file = STRINGnew)
 
 # use only high-confidence edges (score > 900)
+# TODO: find out which src
 tmp <- src
 src <- src[src$combined_score > 900, ]
 nrow(src)
@@ -84,8 +89,8 @@ nrow(src)
 
 
 
-load("MARA.RData")
-# needs code here that builds a network for the cell-types we are working with.
+load(here::here("MARA.RData"))
+# needs code fpath that builds a network for the cell-types we are working with.
 # ....
 
 
@@ -94,7 +99,7 @@ load("MARA.RData")
 #This is the entire TRRUST network with no subsetting
 #Directed from Transcription Factor to Gene
 
-source("./TRRUST_network/TRRUST_network.R")
+source(here::here("TRRUST_network/TRRUST_network.R"))
 trrust <- loadTRRUST()
 setMode(1)
 genes <- trrust[,1]

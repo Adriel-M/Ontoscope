@@ -6,8 +6,8 @@
 #Load the Database
 #####
 .check_ID_DB <- function(){
-  if (file.exists("ID_database.RData")){
-    load("ID_database.RData",envir = globalenv())
+  if (file.exists(here::here("phylify/ID_database.RData"))) {
+    load(here::here("phylify/ID_database.RData") ,envir = globalenv())
     message ('ID_database Loaded!')
   } else { stop("ID_database.RData not found. Please put it in your working directory")
   }

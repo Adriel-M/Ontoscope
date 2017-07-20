@@ -4,10 +4,10 @@
 
 # see workflow for more comments
 
-source("ontology-explorer.r")
-source("../fantom_import/fantom_main.R")
+source(here::here("phylify/ontology-explorer.r"))
+source(here::here("fantom_import/fantom_main.R"))
 
-fantom <- getOBO("ff-phase2-140729.obo")
+fantom <- getOBO(here::here("phylify/ff-phase2-140729.obo"))
 mogrifyIDs <- getMogrifyIDs()
 DESeqable <- as.character(fantom_samples[!is.na(fantom_samples[,2]),2])
 

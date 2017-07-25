@@ -40,8 +40,10 @@ if (!require(visNetwork, quietly=TRUE)) {
 ####
 
 #Preparing this check for "Load" Mode
+trrust_file <- here::here("TRRUST_network/trrust_rawdata.txt")
+
 .checkTRRUST <- function(){
-  if ((file.exists("trrust_rawdata.txt") == FALSE) & (file.exists("./TRRUST_network/trrust_rawdata.txt") == FALSE)){
+  if (!file.exists(trrust_file)) {
     message("The 'trrust_rawdata.txt' file is missing from your Work Directory ") & stop()
   }
 }
@@ -60,7 +62,7 @@ if (!require(visNetwork, quietly=TRUE)) {
 
 loadTRRUST <- function(){
   tryCatch({
-    fread("trrust_rawdata.txt", header=FALSE, stringsAsFactors = FALSE, showProgress = FALSE, data.table = FALSE)
+    fread(trrust_file, header=FALSE, stringsAsFactors = FALSE, showProgress = FALSE, data.table = FALSE)
   }, error = function(e){
     fread("./TRRUST_network/trrust_rawdata.txt", header=FALSE, stringsAsFactors = FALSE, showProgress = FALSE, data.table = FALSE)
   }, warning = function(w){

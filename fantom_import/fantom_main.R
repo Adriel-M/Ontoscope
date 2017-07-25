@@ -83,9 +83,9 @@ if (!require(tidyr, quietly=TRUE)) {
 fantom_samples <- tryCatch({
   read.table('Sample_DB.txt')
 }, error = function(e){
-  read.table('./fantom_import/Sample_DB.txt')
+  read.table(here:here('fantom_import/Sample_DB.txt'))
 }, warning = function(w){
-  read.table('./fantom_import/Sample_DB.txt')
+  read.table(here::here('fantom_import/Sample_DB.txt'))
 }
 
 )
@@ -525,8 +525,8 @@ fantomProcess <- function(){
 ## File created thanks to Shivani Kamdar
 .TFdatabaseLoad <- function(){
   
-  if (file.exists("TF_database.RData")){
-    load("TF_database.RData", envir = globalenv())
+  if (file.exists(here::here("fantom_import/TF_database.RData"))){
+    load(here::here("fantom_import/TF_database.RData"), envir = globalenv())
     message("TF_database Loaded!")
     
   } else {

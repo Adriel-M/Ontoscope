@@ -16,4 +16,4 @@ G <- getIgraph(fantom)
 # Take cell lines from Mogrify and all the replicates we have
 COdat <- filterByGood(G, c(mogrifyIDs, DESeqable))
 
-save(COdat, file="COdat.RData")
+save(COdat, file=here::here("COdat.RData"))

@@ -29,7 +29,6 @@ source(here::here("phylify/ontology-explorer.r"))
 
 # load the ontology
 load(here::here("phylify/COdat.RData"))
-#load("./phylify/COdat.RData")
 
 mogList <- getMogrifyIDs()
 
@@ -112,17 +111,3 @@ TRRUST_GRNGRAPH <- graph_from_data_frame(trrust_edges, directed = TRUE)
 
 
 # [END]
-
-
-
-
-
-
-
-
-
-
-
-
-
-

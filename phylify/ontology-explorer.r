@@ -309,7 +309,7 @@ getMogrifyIDs <- function() {
 # this depends on an internet connection, and node. and being "here"
 # It was used to verify our replicates vs. Mogrify's replicates for an FF cell ID
 getMogrifyCNhsIDs <- function(source, target) {
-    cmd <- paste("node getMogrifyCNhs/get.js", source, target)
+    cmd <- paste("node", here::here("phylify/getMogrifyCNhs/get.js"), source, target)
   df <- fromJSON(system(cmd, intern=TRUE))
   df$val <- lapply(df$val, convertIDs)
 

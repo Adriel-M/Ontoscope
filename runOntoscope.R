@@ -13,7 +13,15 @@
 # ==========================================================
 
 
-library(here)
+if (!require(here, quietly=TRUE)) {
+  if (!require(devtools, quietly=TRUE)) {
+    install.packages("devtools")
+    library(devtools)
+  }
+  devtools::install_github("krlmlr/here")
+  library(here)
+}
+
 here::here()
 
 # ==== INITS =============================
@@ -79,6 +87,8 @@ diffExp <- contrast(counts)
 
 # use only high-confidence edges (score > 900)
 # TODO: find out which src
+# in normalize/normalizeWEAVE.R
+# Finish save to file
 tmp <- src
 src <- src[src$combined_score > 900, ]
 nrow(src)

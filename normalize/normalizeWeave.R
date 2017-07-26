@@ -25,14 +25,14 @@
 # V 1.1:     Shifted From Regular protein links file to detailed, kept initial values instead of replacement, throws NA instead of default code
 # ====================================================================
 
-setwd(DEVDIR)
-
 # ====  PARAMETERS  ==================================================
 #
 
 output <- "hgnc_symbol"
 
-STRINGsource <- file.path("./WEAVE", "9606.protein.links.detailed.v10.txt")
+STRINGgzip <- here::here("WEAVE/9606.protein.links.detailed.v10.txt.gz")
+
+STRINGsource <- here::here("WEAVE/9606.protein.links.detailed.v10.txt")
                 # STRING graph edges. One header line. Values separated by
                 # a single blank character. 8,548,003 lines.
                 # 
@@ -41,7 +41,7 @@ STRINGsource <- file.path("./WEAVE", "9606.protein.links.detailed.v10.txt")
                 # 9606.ENSP00000000233 9606.ENSP00000003100 215
                 # [...]
 
-STRINGnew <- file.path("./WEAVE", "curatedOutput.RData")
+STRINGnew <- here::here("WEAVE/curatedOutput.RData")
                 # output file name
                 # STRING graph edges. One header line. Values separated by
                 # a single blank character. 8,548,003 lines. HGNC
@@ -51,7 +51,7 @@ STRINGnew <- file.path("./WEAVE", "curatedOutput.RData")
                 # 9606.ENSP00000000233 9606.ENSP00000003084 150
                 # 9606.ENSP00000000233 9606.ENSP00000003100 215
                 # [...]
- 
+
 
 # ====  PACKAGES  ====================================================
 
@@ -60,6 +60,20 @@ if (!require(biomaRt)) {
   source("http://bioconductor.org/biocLite.R")
   biocLite("biomaRt")
   library("biomaRt")
+}
+
+if (!require(here, quietly=TRUE)) {
+  install.packages("R.utils")
+}
+
+# ==== File setup ====================================================
+
+if (!file.exists(STRINGsource))  {
+  if (file.exists(STRINGgzip)) {
+    R.utils::gunzip(STRINGgzip, STRINGsource, remove=FALSE)
+  } else {
+    stop("STRINGsource does not exists")
+  }
 }
 
 

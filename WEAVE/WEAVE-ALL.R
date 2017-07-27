@@ -29,8 +29,6 @@
 # V 0.4:     STRGRAPH now contains only high confidence interactions (combined score > 700)
 # ====================================================================
 
-setwd(paste(DEVDIR, "/WEAVE", sep="")) # Modify to your working directory
-
 # ====  PARAMETERS  ==================================================
 # Don't put "magic numbers" and files in your code. Place them here,
 # assign them to a well-named variable and explain the meaning!
@@ -76,17 +74,16 @@ getTFSubgraph <- function(TF, order=1, GRAPH=STRGRAPH) {
 
 # Creates the STRING igraph object from database stored in curatedOutput.Rdata
 # NOTE: Please run normalizeWeave.R in NORMALIZE module BEFORE continuing!!!
-load("curatedOutput.Rdata")
+load(here::here("WEAVE/curatedOutput.RData"))
 high_conf_interactions = src[src$combined_score > 700,]
 STRGRAPH <- graph_from_data_frame(high_conf_interactions, directed = TRUE)
 
 # Creates the REGNET igraph object
-source("../REGNET/REGNET.R")
+source(here::here("REGNET/REGNET.R"))
 
 # Creates the TRRUST igraph object
 
-setwd("../TRRUST_network/")  # Functions in TRRUST_network.R needed to call files in TRRUST directory
-source("./TRRUST_network.R")
+source(here::here("TRRUST_network/TRRUST_network.R"))
 
 trrust_df <- loadTRRUST()
 trrust_df <- fixColumns(trrust_df)
@@ -96,13 +93,11 @@ TRRUSTGRAPH <- graph.data.frame(trrust_df)
 # Example use of getTFSubgraph function
 SubgraphList<-getTFSubgraph("MYC")
 
-# Sets current working directory back to WEAVE to save Rdata file in correct directory
-setwd("../WEAVE")
-
 # Saves all necessary output for downstream functions in an RData file
 # Takes 1-2 mins; provided so that downstream workflows won't need to call WEAVE again to get
 # required files.
-save(STRGRAPH, REGNETGRAPH, TRRUSTGRAPH, getTFSubgraph, file="WEAVE.RData")
+WEAVE_Path = here::here("WEAVE/WEAVE.RDATA")
+save(STRGRAPH, REGNETGRAPH, TRRUSTGRAPH, getTFSubgraph, file=WEAVE_Path)
 
 # ====  TESTS  =======================================================
 #

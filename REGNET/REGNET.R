@@ -23,14 +23,9 @@
 # V 0.3:     Added comments to code
 # ====================================================================
 
-setwd(paste(DEVDIR, "/REGNET", sep="")) # Modify to your working directory
-
 # ====  PARAMETERS  ==================================================
 # Don't put "magic numbers" and files in your code. Place them here,
 # assign them to a well-named variable and explain the meaning!
-
-
-
 
 
 # ====  PACKAGES  ====================================================
@@ -59,10 +54,9 @@ if (!require(igraph, quietly=TRUE)) {
 # example ...
 
 # Puts all high, medium, and low confidence csv files into separate dataframes
-
-HIGHCONF <- read.csv("REGNET_HIGH_CONF.csv", header=TRUE, sep= ",")
-MEDIUMCONF <- read.csv("REGNET_MEDIUM_CONF.csv", header=TRUE, sep= ",")
-LOWCONF <- read.csv("REGNET_LOW_CONF.csv", header=TRUE, sep= ",")
+HIGHCONF <- read.csv(here::here("REGNET/REGNET_HIGH_CONF.csv"), header=TRUE, sep= ",")
+MEDIUMCONF <- read.csv(here::here("REGNET/REGNET_MEDIUM_CONF.csv"), header=TRUE, sep= ",")
+LOWCONF <- read.csv(here::here("REGNET/REGNET_LOW_CONF.csv"), header=TRUE, sep= ",")
 
 
 # Combines all dataframes into one and reordered the rows, with HGNC symbols of regulator and target

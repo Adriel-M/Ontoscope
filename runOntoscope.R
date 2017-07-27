@@ -25,7 +25,6 @@ if (!require(here, quietly=TRUE)) {
 here::here()
 
 # ==== INITS =============================
-# FINE
 source(here::here("phylify/ontology-explorer.r"))
 
 
